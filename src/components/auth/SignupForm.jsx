@@ -3,8 +3,31 @@ import { Link } from "react-router-dom"
 import InputField from "./InputField"
 import OAuthButton from "./OAuthButton"
 import googleLogo from "../../assets/icons/google_logo.png"
+import { signup } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react"
 
 export default function SignupForm() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signup({
+      username,
+      email,
+      password,
+    });
+    navigate("/");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+  
   return (
     <div className="w-full max-w-[470px] rounded-[36px] bg-white px-10 py-10 shadow-[0_16px_60px_rgba(103,55,183,0.12)]">
       <h2 className="text-[28px] font-bold text-[#242424]">
@@ -15,14 +38,18 @@ export default function SignupForm() {
         The playground is waiting for you.
       </p>
 
-      <form className="mt-3 space-y-3">
+      <form className="mt-3 space-y-3" onSubmit={handleSubmit}>
         <InputField
+          value={username}
+          onChange={ (e) => setUsername(e.target.value)}
           label="Username"
           placeholder="Alex Kwizbot"
           icon={User}
         />
 
         <InputField
+          value={email}
+          onChange={(e)=>setEmail(e.target.value)}
           label="Email Address"
           type="email"
           placeholder="hello@kwizzy.com"
@@ -30,6 +57,8 @@ export default function SignupForm() {
         />
 
         <InputField
+          value={password}
+          onChange={(e)=>setPassword(e.target.value)}
           label="Password"
           type="password"
           placeholder="••••••••"
