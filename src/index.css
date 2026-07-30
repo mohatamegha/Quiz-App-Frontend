@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Libertinus Serif", serif;
+  --font-body: "Mulish", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: #f7f2ff;
+}
+
+.bg-dots {
+  background-image: radial-gradient(#00000014 1px, transparent 1px);
+  background-size: 20px 20px;
+}
