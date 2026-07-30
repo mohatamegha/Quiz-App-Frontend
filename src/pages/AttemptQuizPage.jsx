@@ -1,56 +1,41 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getQuizById, evaluateQuiz } from "../api/api";
 
 import QuizNavbar from "../components/quiz/QuizNavbar";
 import QuizProgress from "../components/quiz/QuizProgress";
 import QuestionSection from "../components/quiz/QuestionSection";
 import QuizFooter from "../components/quiz/QuizFooter";
 
-const mockQuiz = {
-  id: 1,
-  name: "Planetary Science",
-  createdAt: "2026-07-30T10:00:00",
-
-  questions: [
-    {
-      questionId: 1,
-      question:
-        "Which planet is known as the Red Planet due to its iron oxide surface?",
-      difficultyLevel: "Easy",
-      option1: "Venus",
-      option2: "Mars",
-      option3: "Jupiter",
-      option4: "Saturn",
-    },
-    {
-      questionId: 2,
-      question: "Which is the largest planet in our Solar System?",
-      difficultyLevel: "Easy",
-      option1: "Earth",
-      option2: "Mars",
-      option3: "Jupiter",
-      option4: "Neptune",
-    },
-    {
-      questionId: 3,
-      question: "Which planet has the most prominent ring system?",
-      difficultyLevel: "Easy",
-      option1: "Mercury",
-      option2: "Saturn",
-      option3: "Venus",
-      option4: "Earth",
-    },
-  ],
-};
 
 export default function AttemptQuizPage() {
-  const [quiz] = useState(mockQuiz);
+  const [quiz, setQuiz] = useState(null);
+  const {id} = useParams();
+  console.log("ID from URL:", id);
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const response = await getQuizById(id);
+        console.log(response.data);
+        setQuiz(response.data);
+      } catch (error) {
+        console.error("Error fetching quiz:", error);
+      }
+    };
+
+    fetchQuiz();
+  }, [id]);
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   // { questionId : selectedOption }
   const [answers, setAnswers] = useState({});
   
   const navigate = useNavigate();
+
+  if (!quiz) {
+    return <div>Loading...</div>;
+  }
 
   const question = quiz.questions[currentQuestion];
 
@@ -87,42 +72,20 @@ export default function AttemptQuizPage() {
         ),
     };
 
-    console.log(payload);
+    try {
+        const response = await evaluateQuiz(quiz.id, payload);
 
-    // await submitQuiz(quiz.id, payload);
-
-    navigate(`/quiz/${quiz.id}/result`, {
-        state: {
-            quizName: "Planetary Science",
-            score: 8,
-            totalQuestions: 10,
-            questionResponseList: [
-                {
-                    questionId: 1,
-                    question: "Which planet is known as the Red Planet?",
-                    selectedOption: "Mars",
-                    actualAnswer: "Mars",
-                    isCorrect: true,
-                },
-                {
-                    questionId: 2,
-                    question: "Which planet is the largest in our solar system?",
-                    selectedOption: "Saturn",
-                    actualAnswer: "Jupiter",
-                    isCorrect: false,
-                },
-                {
-                    questionId: 3,
-                    question: "How many planets are there in the Solar System?",
-                    selectedOption: "8",
-                    actualAnswer: "8",
-                    isCorrect: true,
-                },
-            ],
-        },
-    });
+        navigate(`/quiz/${quiz.id}/result`, {
+            state: {
+                quizName: quiz.name,
+                ...response.data,
+            },
+        });
+    } catch (error) {
+        console.error("Error submitting quiz:", error);
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-[#F7F1FA]">
 

@@ -6,7 +6,7 @@ import monster from "../../assets/images/monster.png";
 import alien from "../../assets/images/alien.png";
 
 import { useEffect, useState } from "react";
-import { getAllQuizzes } from "../../api/quiz";
+import { getAllQuizzes } from "../../api/api";
 
 
 const rowClasses = [
@@ -155,6 +155,7 @@ export default function QuizTrail() {
                 title={quiz.quizName}
                 q={10}
                 top={offsets[i]}
+                id={quiz.quizId}
               />
 
             ))}

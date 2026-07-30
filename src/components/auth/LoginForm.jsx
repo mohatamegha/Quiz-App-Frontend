@@ -7,8 +7,8 @@ import { useState, useContext } from "react"
 import { decodeToken } from "../../utils/jwt"
 import { useNavigate } from "react-router-dom"
 
-import { AuthContext } from "../context/AuthContext";
-import { login as loginApi } from "../api/auth";
+import { AuthContext } from "../../context/AuthContext";
+import { login as loginApi } from "../../api/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState();

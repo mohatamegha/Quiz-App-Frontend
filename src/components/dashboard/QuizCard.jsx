@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function QuizCard({ id, title, q, top }) {
   const navigate = useNavigate();
-  
+
   return (
     <article
       style={{ marginTop: top }}
@@ -29,6 +29,7 @@ export default function QuizCard({ id, title, q, top }) {
       </p>
 
       <button
+        onClick={() => navigate(`/quiz/${id}`)}
         className="
           mt-3
           w-full

@@ -28,7 +28,7 @@ export default function ReviewCard({ question }) {
           </p>
 
           <p className="text-xl font-medium text-[#3A2D1F]">
-            {question.question}
+            {question.ques}
           </p>
         </div>
 
