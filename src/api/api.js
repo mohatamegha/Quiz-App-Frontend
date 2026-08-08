@@ -1,9 +1,16 @@
 import api from "./axios";
 
-// quiz.js
+// get all quiz
 export const getAllQuizzes = async () => {
     const response = await api.get("/quiz");
     return response.data;
+};
+
+
+//update quiz
+export const updateQuiz = async (quizId, quizName) => {
+  const response = await api.patch(`/quiz/${quizId}`, { quizName });
+  return response.data;
 };
 
 //quiz by id
@@ -20,6 +27,10 @@ export const evaluateQuiz = (quizId, payload) => {
 //create quiz
 export const createQuiz = (quiz) => {
   return api.post("/quiz", quiz);
+};
+
+export const deleteQuiz = async (quizId) => {
+  await api.delete(`/quiz/${quizId}`);
 };
 
 //add question

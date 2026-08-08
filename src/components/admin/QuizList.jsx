@@ -2,19 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { Pencil, Trash2, Plus, X, Check } from "lucide-react";
 import { useState } from "react";
 
-const quizzes = [
-  { quizId: 1, quizName: "Java Basics", questions: 3, createdAt: "2026-07-27" },
-  { quizId: 2, quizName: "Spring Boot Fundamentals", questions: 4, createdAt: "2026-07-27" },
-  { quizId: 3, quizName: "DBMS and SQL", questions: 3, createdAt: "2026-07-27" },
-  { quizId: 4, quizName: "Operating Systems", questions: 2, createdAt: "2026-07-27" },
-  { quizId: 5, quizName: "General Knowledge", questions: 3, createdAt: "2026-07-27" },
-];
-
-
-
-export default function QuizList(){
+export default function QuizList({quizzes, onSave, onDelete}){
   const navigate = useNavigate();
-  const [quizList, setQuizList] = useState(quizzes);
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
 
@@ -28,17 +17,10 @@ export default function QuizList(){
     setEditName("");
   };
 
-  const saveEdit = (id) => {
+  const saveEdit = async (quizId) => {
     if (!editName.trim()) return;
 
-    setQuizList((prev) =>
-      prev.map((quiz) =>
-        quiz.quizId === id
-          ? { ...quiz, quizName: editName.trim() }
-          : quiz
-      )
-    );
-
+    await onSave(quizId, editName.trim());
     cancelEditing();
   };
 
@@ -65,7 +47,7 @@ export default function QuizList(){
       </div>
 
       <div className="mt-4 space-y-3">
-        {quizList.map((quiz) => (
+        {quizzes.map((quiz) => (
           <article
             key={quiz.quizId}
             className="flex items-center justify-between rounded-[26px] border border-[#E5D9C9] bg-white px-6 py-4 shadow-[0_3px_0_#DDD]"
@@ -116,7 +98,7 @@ export default function QuizList(){
                   </button>
 
                   <button
-                    onClick={() => console.log("Delete", quiz.quizId)}
+                    onClick={() => onDelete(quiz.quizId)}
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E5D9C9] text-gray-500 hover:bg-red-50 hover:text-red-500"
                   >
                     <Trash2 size={14} />

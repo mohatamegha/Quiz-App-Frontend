@@ -1,47 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import AdminHeroSection from "../components/admin/AdminHeroSection";
 import QuickActions from "../components/admin/QuickActions";
 import QuizList from "../components/admin/QuizList";
-
-const quizzes = [
-  { quizId: 1, quizName: "Java Basics", questions: 3, createdAt: "2026-07-27" },
-  { quizId: 2, quizName: "Spring Boot Fundamentals", questions: 4, createdAt: "2026-07-27" },
-  { quizId: 3, quizName: "DBMS and SQL", questions: 3, createdAt: "2026-07-27" },
-  { quizId: 4, quizName: "Operating Systems", questions: 2, createdAt: "2026-07-27" },
-  { quizId: 5, quizName: "General Knowledge", questions: 3, createdAt: "2026-07-27" },
-];
+import { getAllQuizzes, updateQuiz, deleteQuiz } from "../api/api";
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
 
-  const [quizList, setQuizList] = useState(quizzes);
-  const [editingId, setEditingId] = useState(null);
-  const [editName, setEditName] = useState("");
+  const [quizzes, setQuizzes] = useState([]);
 
-  const startEditing = (quiz) => {
-    setEditingId(quiz.quizId);
-    setEditName(quiz.quizName);
+  const loadQuizzes = async () => {
+    try {
+      const data = await getAllQuizzes();
+      setQuizzes(data);
+    } catch (error) {
+      console.error("Failed to fetch quizzes:", error);
+    }
   };
 
-  const cancelEditing = () => {
-    setEditingId(null);
-    setEditName("");
+  useEffect(() => {
+    loadQuizzes();
+  }, []);
+
+  const saveEdit = async (quizId, updatedQuizName) => {
+    try {
+      const updatedQuiz = await updateQuiz(quizId, updatedQuizName);
+
+      setQuizzes((prev) =>
+        prev.map((quiz) =>
+          quiz.quizId === quizId ? updatedQuiz : quiz
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update quiz:", error);
+    }
   };
 
-  const saveEdit = (id) => {
-    if (!editName.trim()) return;
+  const handleDeleteQuiz = async (quizId) => {
+    try {
+      await deleteQuiz(quizId);
 
-    setQuizList((prev) =>
-      prev.map((quiz) =>
-        quiz.quizId === id
-          ? { ...quiz, quizName: editName.trim() }
-          : quiz
-      )
-    );
-
-    cancelEditing();
+      setQuizzes((prev) =>
+        prev.filter((quiz) => quiz.quizId !== quizId)
+      );
+    } catch (error) {
+      console.error("Failed to delete quiz:", error);
+    }
   };
 
   return (
@@ -57,16 +63,20 @@ export default function AdminDashboardPage() {
     
         {/* Stats */}
         <section className="mt-6 grid grid-cols-3 gap-5">
-          <StatCard title="Total Quizzes" value={quizList.length} />
+          <StatCard title="Total Quizzes" value={quizzes.length} />
           <StatCard title="Total Questions" value="15" />
           <StatCard title="Total Users" value="42" />
         </section>
 
         {/* Quick Actions */}
-        <QuickActions/>     
+        <QuickActions onCreateQuiz={ () => navigate("/admin/quiz/create")}/>     
 
         {/* Quizzes */}
-        <QuizList/>
+        <QuizList
+          quizzes={quizzes}
+          onSave={saveEdit}
+          onDelete={handleDeleteQuiz}
+        />
       </main>
     </div>
   );
