@@ -109,6 +109,8 @@ export default function QuizList({quizzes, onSave, onDelete}){
           </article>
         ))}
       </div>
+      <div>
+      </div>
     </section>
   )
 }
