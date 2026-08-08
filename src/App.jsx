@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage";
 import AttemptQuizPage from "./pages/AttemptQuizPage";
 import QuizResultPage from "./pages/QuizResultPage";
 import AddQuizPage from "./pages/AddQuizPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 function ProtectedRoute({ adminOnly = false }) {
   const { token, user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ function ProtectedRoute({ adminOnly = false }) {
     return <Navigate to="/" replace />;
   }
 
-  if (adminOnly && user?.role !== "ROLE_ADMIN") {
+  if (adminOnly && user?.role !== "ADMIN") {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -40,6 +41,7 @@ export default function App() {
       {/* Protected Admin Routes */}
       <Route element={<ProtectedRoute adminOnly />}>
         <Route path="/admin/quiz/create" element={<AddQuizPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage/>} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
