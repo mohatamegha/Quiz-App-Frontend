@@ -36,7 +36,7 @@ export default function QuestionSection({
 
         {/* Options */}
 
-        <div className="min-h-[88px] mt-10 grid grid-cols-2 gap-6">
+        <div className="hover:cursor-pointer min-h-[88px] mt-10 grid grid-cols-2 gap-6">
 
           {options.map((option, index) => (
 

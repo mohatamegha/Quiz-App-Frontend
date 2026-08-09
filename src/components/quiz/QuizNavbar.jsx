@@ -9,7 +9,7 @@ export default function QuizNavbar() {
 
       <button
         onClick={() => navigate(-1)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-gray-100"
+        className="cursor-pointer flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-gray-100"
       >
         <X size={18} />
       </button>

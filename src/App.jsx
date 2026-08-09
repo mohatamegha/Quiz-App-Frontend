@@ -9,6 +9,7 @@ import AttemptQuizPage from "./pages/AttemptQuizPage";
 import QuizResultPage from "./pages/QuizResultPage";
 import AddQuizPage from "./pages/AddQuizPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import ComingSoonPage from "./pages/ComingSoonPage";
 
 function ProtectedRoute({ adminOnly = false }) {
   const { token, user } = useContext(AuthContext);
@@ -36,11 +37,13 @@ export default function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/quiz/:id" element={<AttemptQuizPage />} />
         <Route path="/quiz/:id/result" element={<QuizResultPage />} />
+        <Route path="/leaderboard" element={<ComingSoonPage/>} />
+        <Route path="/history" element={<ComingSoonPage />} />
       </Route>
 
       {/* Protected Admin Routes */}
       <Route element={<ProtectedRoute adminOnly />}>
-        <Route path="/admin/quiz/create" element={<AddQuizPage />} />
+        <Route path="/admin/quiz/:quizId" element={<AddQuizPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage/>} />
       </Route>
 

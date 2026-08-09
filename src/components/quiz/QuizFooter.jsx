@@ -32,11 +32,11 @@ export default function QuizFooter({
       <button
         onClick={isLast ? onSubmit : onNext}
         disabled={disableNext}
-        className={`flex items-center gap-2 rounded-full px-8 py-3 text-sm font-semibold transition
+        className={`cursor-pointer flex items-center gap-2 rounded-full px-8 py-3 text-sm font-semibold transition
         ${
           disableNext
             ? "cursor-not-allowed bg-gray-300 text-white"
-            : "bg-[#933393] text-white hover:bg-[#7717c9]"
+            : "bg-[#933393] text-white"
         }`}
       >
         {isLast ? "Submit Quiz" : "Save & Next"}

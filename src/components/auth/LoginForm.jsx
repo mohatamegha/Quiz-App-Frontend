@@ -81,7 +81,7 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className="flex h-16 w-full items-center justify-center gap-2 rounded-full bg-[#FFC53D] text-xl font-semibold text-[#8f39b7] transition-colors hover:bg-[#f5bc2d]"
+          className="flex h-16 w-full items-center justify-center gap-2 rounded-full bg-[#FFC53D] text-xl font-semibold text-[#8f39b7] transition-colors cursor-pointer hover:bg-[#f5bc2d]"
         >
           Enter the Lab
           <ArrowRight size={22} />

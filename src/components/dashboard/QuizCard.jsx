@@ -40,7 +40,7 @@ export default function QuizCard({ id, title, q, top }) {
           font-semibold
           text-[#933393]
           transition
-          hover:bg-violet-500
+          hover:bg-[#933393]
           hover:text-white
         "
       >

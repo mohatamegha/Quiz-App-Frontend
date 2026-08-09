@@ -14,8 +14,9 @@ export const updateQuiz = async (quizId, quizName) => {
 };
 
 //quiz by id
-export const getQuizById = (id) => {
-    return api.get(`/quiz/${id}`);
+export const getQuizById = async (id) => {
+    const response = await api.get(`/quiz/${id}`);
+    return response
 };
 
 
@@ -25,12 +26,21 @@ export const evaluateQuiz = (quizId, payload) => {
 };
 
 //create quiz
-export const createQuiz = (quiz) => {
-  return api.post("/quiz", quiz);
+export const createQuiz = async (quizName) => {
+  const response = await api.post("/quiz", { quizName });
+  return response.data;
 };
 
+
+//delete a quiz
 export const deleteQuiz = async (quizId) => {
   await api.delete(`/quiz/${quizId}`);
+};
+
+//add multiple questions to quiz all at once
+export const addBulkQuestions = async (questions) => {
+  const response = await api.post("/question/bulk", questions);
+  return response.data;
 };
 
 //add question

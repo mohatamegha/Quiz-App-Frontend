@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { Pencil, Trash2, Plus, X, Check } from "lucide-react";
 import { useState } from "react";
 
-export default function QuizList({quizzes, onSave, onDelete}){
+export default function QuizList({onCreateQuiz, quizzes, onSave, onDelete}){
   const navigate = useNavigate();
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
@@ -38,7 +38,7 @@ export default function QuizList({quizzes, onSave, onDelete}){
         </div>
 
         <button
-          onClick={() => navigate("/admin/quiz/create")}
+          onClick={() => onCreateQuiz()}
           className="flex items-center gap-2 rounded-full bg-[#FFC53D] px-5 py-2.5 text-sm font-semibold text-[#4A3B00] shadow-[0_2px_0_#D49D1E] hover:bg-[#F5BC2D]"
         >
           <Plus size={16} />

@@ -6,6 +6,7 @@ import QuizNavbar from "../components/quiz/QuizNavbar";
 import QuizProgress from "../components/quiz/QuizProgress";
 import QuestionSection from "../components/quiz/QuestionSection";
 import QuizFooter from "../components/quiz/QuizFooter";
+import Navbar from "../components/dashboard/Navbar";
 
 
 export default function AttemptQuizPage() {
@@ -87,8 +88,8 @@ export default function AttemptQuizPage() {
   };
   
   return (
-    <div className="min-h-screen bg-[#F7F1FA]">
-
+    <div className="-mt-3 bg-[#F7F1FA]">
+      <Navbar/>
       <QuizNavbar />
 
       <QuizProgress

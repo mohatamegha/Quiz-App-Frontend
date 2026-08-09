@@ -13,8 +13,7 @@ const emptyQuestion = {
   difficulty: "EASY",
 };
 
-export default function QuestionBuilder() {
-  const [questions, setQuestions] = useState([emptyQuestion]);
+export default function QuestionBuilder({questions, setQuestions}) {
   const [activeQuestion, setActiveQuestion] = useState(0);
 
   const addQuestion = () => {
