@@ -10,6 +10,8 @@ import QuizResultPage from "./pages/QuizResultPage";
 import AddQuizPage from "./pages/AddQuizPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import ComingSoonPage from "./pages/ComingSoonPage";
+import LandingPage from "./pages/LandingPage";
+import HistoryPage from "./pages/HistoryPage";
 
 function ProtectedRoute({ adminOnly = false }) {
   const { token, user } = useContext(AuthContext);
@@ -29,7 +31,8 @@ export default function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/" element={<LandingPage/>} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
 
       {/* Protected User Routes */}
@@ -38,7 +41,7 @@ export default function App() {
         <Route path="/quiz/:id" element={<AttemptQuizPage />} />
         <Route path="/quiz/:id/result" element={<QuizResultPage />} />
         <Route path="/leaderboard" element={<ComingSoonPage/>} />
-        <Route path="/history" element={<ComingSoonPage />} />
+        <Route path="/history" element={<HistoryPage/>} />
       </Route>
 
       {/* Protected Admin Routes */}

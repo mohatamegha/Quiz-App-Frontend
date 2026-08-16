@@ -16,6 +16,10 @@ export default function SignupPage() {
           </div>
 
           <div>
+            <h1 className="text-6xl font-extrabold text-[#8f39b7]">
+              Kwizzy
+            </h1>
+            
             <h2 className="text-lg font-semibold text-[#9d3fb9]">
               Level Up Your Learning.
             </h2>

@@ -47,3 +47,10 @@ export const addBulkQuestions = async (questions) => {
 export const addQuestion = (question) => {
   return api.post("/question", question);
 };
+
+
+//get results
+export const getResults = async () => {
+  const response = await api.get("/result");
+  return response;
+};
